@@ -21,13 +21,15 @@ getJasmineRequireObj().Suite = function(j$) {
      * @property {String} description - The description text passed to the {@link describe} that made this suite.
      * @property {String} fullName - The full description including all ancestors of this suite.
      * @property {Expectation[]} failedExpectations - The list of expectations that failed in an {@link afterAll} for this suite.
+     * @proptery {boolean} markedPending - If the suite is set pending.
      * @property {String} status - Once the suite has completed, this string represents the pass/fail status of this suite.
      */
     this.result = {
       id: this.id,
       description: this.description,
       fullName: this.getFullName(),
-      failedExpectations: []
+      failedExpectations: [],
+      markedPending: false,
     };
   }
 
@@ -46,7 +48,7 @@ getJasmineRequireObj().Suite = function(j$) {
   };
 
   Suite.prototype.pend = function() {
-    this.markedPending = true;
+    this.result.markedPending = true;
   };
 
   Suite.prototype.beforeEach = function(fn) {
@@ -70,7 +72,7 @@ getJasmineRequireObj().Suite = function(j$) {
   };
 
   Suite.prototype.status = function() {
-    if (this.markedPending) {
+    if (this.result.markedPending) {
       return 'pending';
     }
 
@@ -82,7 +84,7 @@ getJasmineRequireObj().Suite = function(j$) {
   };
 
   Suite.prototype.isExecutable = function() {
-    return !this.markedPending;
+    return !this.result.markedPending;
   };
 
   Suite.prototype.canBeReentered = function() {
