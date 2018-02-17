@@ -7,7 +7,7 @@ getJasmineRequireObj().GlobalErrors = function(j$) {
       var handler = handlers[handlers.length - 1];
 
       if (handler) {
-        handler.apply(null, Array.prototype.slice.call(arguments, 0));
+        handler.apply(null, Array.prototype.slice.call(arguments));
       } else {
         throw arguments[0];
       }
